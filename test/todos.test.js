@@ -5,7 +5,7 @@ const {queryInterface} = sequelize;
 
 beforeAll((done) => {
 
-  queryInterface.bulkInsert("Todo", [
+  queryInterface.bulkInsert("Todos", [
       {
           id: 9999991,
           title: "Wanna sleep",
@@ -35,17 +35,15 @@ beforeAll((done) => {
 
 afterAll((done) => {
 
-  queryInterface.bulkDelete("Todo", null, {})
+  queryInterface.bulkDelete("Todos", null, {})
       .then(_ => {
           done()
       })
       .catch(err => {
+        console.log(err)
           done(err)
       })
 })
-
-// UNIT TESTING / TEST DRIVEN DEVELOPMENT
-// TEST SETIAP ENDPOINT YANG DIBUAT
 
 describe("GET /todos", () => {
 
@@ -57,7 +55,7 @@ describe("GET /todos", () => {
           .expect(200)
           .then((res) => {
               const {data} = res.body;
-              expect(data.length).toBe(1)
+              expect(data.length).toBe(3)
               const firstData = data[0]
 
               expect(firstData.title).toEqual("Wanna sleep")
@@ -92,13 +90,13 @@ describe("GET /todos/:id", () => {
   it("Todo Not Found", (done) => {
 
       request(app)
-          .get(`/games/${6666}`)
+          .get(`/todos/${6666}`)
           .expect('Content-Type', /json/)
           .expect(404)
           .then((res) => {
               const {message} = res.body;
 
-              expect(message).toEqual("Todo Not Found")
+              expect(message).toEqual("Todo not found")
               done();
           })
           .catch(err => {
@@ -129,7 +127,6 @@ describe("POST /todos", () => {
               done(err)
           })
   })
-
 })
 
 

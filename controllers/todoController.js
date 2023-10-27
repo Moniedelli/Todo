@@ -1,7 +1,7 @@
 const { Todo } = require('../models');
 
 class TodoController {
-  static listTodos = async (req, res) => {
+  static listTodos = async (req, res, next) => {
     try {
       const todos = await Todo.findAll();
       res.status(200).json({data: todos})
@@ -10,7 +10,7 @@ class TodoController {
     }
   };
   
-  static getTodoById = async (req, res) => {
+  static getTodoById = async (req, res, next) => {
     try {
       const todo = await Todo.findByPk(req.params.id);
       if (todo) {
@@ -23,7 +23,7 @@ class TodoController {
     }
   };
   
-  static createTodo = async (req, res) => {
+  static createTodo = async (req, res, next) => {
     try {
       const { title } = req.body;
       const todo = await Todo.create({ title });
@@ -33,7 +33,7 @@ class TodoController {
     }
   };
   
-  static deleteTodo = async (req, res) => {
+  static deleteTodo = async (req, res, next) => {
     try {
       const todo = await Todo.findByPk(req.params.id);
       if (todo) {

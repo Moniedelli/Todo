@@ -13,6 +13,22 @@
     "host": "localhost",
     "dialect": "postgres"
   },
+  "docker": {
+    "username": "postgres",
+    "password": "mon_455",
+    "database": "todo-docker",
+    "host": "host.docker.internal",
+    "dialect": "postgres",
+    "port": 5439
+  },
+  "docker-test": {
+    "username": "postgres",
+    "password": "mon_455",
+    "database": "todo-docker-test",
+    "host": "host.docker.internal",
+    "dialect": "postgres",
+    "port": 5439
+  },
   "production": {
     "username": "root",
     "password": null,
