@@ -23,9 +23,11 @@ jobs:
         uses: docker/setup-buildx-action@v3
       -
         name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          target: prod
-          tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name | lower }}:latest
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          REPO_NAME_LOWERCASE=$(echo "$REPO_NAME" | tr '[:upper:]' '[:lower:]')
+          IMAGE_NAME="$DOCKER_USERNAME/$REPO_NAME_LOWERCASE:latest"
+          docker build -t $IMAGE_NAME .
+          docker push $IMAGE_NAME
